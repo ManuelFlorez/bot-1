@@ -1,9 +1,5 @@
 require('dotenv').config()
 
-const { saludo, variables } = require('./src/app/app.js')
+const { botsApi, variables } = require('./src/app/app.js')
 
-saludo('Manuel')
-
-console.log(variables.host);
-console.log(variables.username);
-console.log(variables.password);
+console.log(`Versión api telegram: ${botsApi}`)
