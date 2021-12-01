@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
+    "start": "tsc & node build/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -20,5 +20,8 @@
   "homepage": "https://github.com/ManuelFlorez/bot-1#readme",
   "dependencies": {
     "dotenv": "^10.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^16.11.11"
   }
 }
