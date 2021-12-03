@@ -18,7 +18,7 @@ export class ResponseBot {
 
   getUpdates(getUpdates: GetUpdates) {
     getUpdates.result.forEach((data) => {
-      const msg = `${data.message.chat.id}: ${data.message.text}`
+      const msg = `${data.update_id}`
       console.log(msg)
     })
   }
@@ -26,5 +26,7 @@ export class ResponseBot {
   sendMessage(getUpdates: GetUpdates) {
     console.log(getUpdates.ok)
   }
+
+  
 
 }

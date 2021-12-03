@@ -8,36 +8,41 @@ const https_1 = __importDefault(require("https"));
 const ResponseBot_1 = require("../api-telegram/ResponseBot");
 class Middleware {
     constructor() {
-        this.url = `https://api.telegram.org/bot`;
         this.token = process.env.TOKEN;
+        this.url = `https://api.telegram.org/bot${this.token}`;
         this.responseBot = new ResponseBot_1.ResponseBot();
         //this.getMe()
         this.getUpdates();
+        //this.sendMessage(1213354586,'hola 🎯')
     }
     getMe() {
-        https_1.default.get(`${this.url}${this.token}/getMe`, (res) => {
+        https_1.default.get(`${this.url}/getMe`, (res) => {
             res.on('data', (data) => {
                 this.responseBot.getMet(JSON.parse(data));
             });
         });
     }
     logOut() {
-        https_1.default.get(`${this.url}${this.token}/logOut`, (res) => {
+        https_1.default.get(`${this.url}/logOut`, (res) => {
             res.on('data', (data) => {
                 this.responseBot.logOut(JSON.parse(data));
             });
         });
     }
     getUpdates() {
-        https_1.default.get(`${this.url}${this.token}/getUpdates`, (res) => {
+        https_1.default.get(`${this.url}/getUpdates`, (res) => {
             res.on('data', (data) => {
-                this.responseBot.getUpdates(JSON.parse(data));
+                const json = JSON.parse(data);
+                this.responseBot.getUpdates(json);
             });
         });
     }
     sendMessage(chat_id, text) {
-        https_1.default.request({});
-        https_1.default.get(`${this.url}${this.token}/sendMessage`, (res) => {
+        https_1.default.get(`${this.url}/sendMessage?chat_id=${chat_id}&text=${text}`, (res) => {
+            res.on('data', (data) => {
+                const json = JSON.parse(data);
+                this.responseBot.sendMessage(json);
+            });
         });
     }
 }

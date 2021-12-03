@@ -4,17 +4,18 @@ import { ResponseBot } from '../api-telegram/ResponseBot'
 
 export class Middleware {
 
-  url = `https://api.telegram.org/bot`
   token = process.env.TOKEN
+  url = `https://api.telegram.org/bot${this.token}`
   responseBot = new ResponseBot();
 
   constructor() {
     //this.getMe()
     this.getUpdates()
+    //this.sendMessage(1213354586,'hola 🎯')
   }
 
   getMe() {
-    https.get(`${this.url}${this.token}/getMe`, (res) => {
+    https.get(`${this.url}/getMe`, (res) => {
       res.on('data', (data) => {
         this.responseBot.getMet(JSON.parse(data))
       })
@@ -22,7 +23,7 @@ export class Middleware {
   }
 
   logOut() {
-    https.get(`${this.url}${this.token}/logOut`, (res) => {
+    https.get(`${this.url}/logOut`, (res) => {
       res.on('data', (data) => {
         this.responseBot.logOut(JSON.parse(data))
       })
@@ -30,18 +31,20 @@ export class Middleware {
   }
 
   getUpdates() {
-    https.get(`${this.url}${this.token}/getUpdates`, (res) => {
+    https.get(`${this.url}/getUpdates`, (res) => {
       res.on('data', (data) => {
-        this.responseBot.getUpdates(JSON.parse(data))
+        const json = JSON.parse(data)
+        this.responseBot.getUpdates(json)
       })
     })
   }
 
   sendMessage(chat_id: number, text: String) {
-    https.request({})
-
-    https.get(`${this.url}${this.token}/sendMessage`, (res) => {
-
+    https.get(`${this.url}/sendMessage?chat_id=${chat_id}&text=${text}`, (res) => {
+      res.on('data', (data) => {
+        const json = JSON.parse(data)
+        this.responseBot.sendMessage(json)
+      })
     })
   }
 

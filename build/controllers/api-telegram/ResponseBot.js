@@ -14,7 +14,7 @@ class ResponseBot {
     }
     getUpdates(getUpdates) {
         getUpdates.result.forEach((data) => {
-            const msg = `${data.message.chat.id}: ${data.message.text}`;
+            const msg = `${data.update_id}`;
             console.log(msg);
         });
     }
